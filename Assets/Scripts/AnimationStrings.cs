@@ -9,4 +9,10 @@ public class AnimationStrings
     public static string IsGrounded = "IsGrounded";
     public static string Attack = "Attack";
     public static string CanMove = "CanMove";
+
+    public static string Hit = "Hit";
+    public static string Death = "Death";
+
+    public static string LockVelocity = "LockVelocity";
+    public static string HasTarget = "HasTarget";
 }

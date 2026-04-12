@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     private TouchingDirections _touchingDirections;
+    private Damageable damageable;
     private Vector2 _moveInput;
     private int _currentJumpCount;
 
@@ -45,16 +46,30 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
     void FixedUpdate()
     {
+        if (!damageable.IsAlive)
+            return;
+
         float currentSpeed = IsSprint ? sprintSpeed : moveSpeed;
         if(_touchingDirections.IsOnWall || !_animator.GetBool(AnimationStrings.CanMove))
         {
             currentSpeed = 0;
         }
-        _rigidbody.linearVelocity = new Vector2(_moveInput.x * currentSpeed, _rigidbody.linearVelocityY);
+
+        if(damageable.LockVelocity)
+        {
+            _rigidbody.linearVelocity = new Vector2(Mathf.Lerp(_rigidbody.linearVelocityX, 0, Time.deltaTime),
+               _rigidbody.linearVelocityY);
+        }
+        else
+        {
+            _rigidbody.linearVelocity = new Vector2(_moveInput.x * currentSpeed, _rigidbody.linearVelocityY);
+        }
+
         _animator.SetFloat(AnimationStrings.VelocityY, _rigidbody.linearVelocityY);
     }
 
@@ -124,6 +139,20 @@ public class PlayerController : MonoBehaviour
         if(context.started)
         {
             _animator.SetTrigger(AnimationStrings.Attack);
+        }
+    }
+
+    public void OnKnockback(Vector2 knockback)
+    {
+        // 넉백을 받으면 넉백을 받은 방향으로 이동
+        _rigidbody.linearVelocity = new Vector2(knockback.x, knockback.y + _rigidbody.linearVelocityY);
+        if (knockback.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (knockback.x < 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
