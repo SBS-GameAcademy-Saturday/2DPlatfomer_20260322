@@ -35,8 +35,5 @@ public class ParallaxEffect : MonoBehaviour
         Vector2 newPosition = startingPosition + camMoveSinceStart / -parallaxFactor;
 
         transform.position = new Vector3(newPosition.x, transform.position.y, transform.position.z);
-
-        Debug.Log($"startingPosition : {startingPosition} camMoveSinceStart : {camMoveSinceStart} parallaxFactor : {parallaxFactor}");
-        Debug.Log($"newPosition : {newPosition} transform.position : {transform.position}");
     }
 }

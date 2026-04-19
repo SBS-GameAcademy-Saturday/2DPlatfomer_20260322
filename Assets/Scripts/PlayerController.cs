@@ -156,4 +156,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnProjectile(InputAction.CallbackContext context)
+    {
+        if(context.started && _touchingDirections.IsGrounded)
+        {
+            _animator.SetTrigger(AnimationStrings.ProjectileAttack);
+        }
+    }
+
 }

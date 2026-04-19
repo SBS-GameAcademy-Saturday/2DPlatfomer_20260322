@@ -8,6 +8,7 @@ public class AnimationStrings
     public static string VelocityY = "VelocityY";
     public static string IsGrounded = "IsGrounded";
     public static string Attack = "Attack";
+    public static string ProjectileAttack = "ProjectileAttack";
     public static string CanMove = "CanMove";
 
     public static string Hit = "Hit";

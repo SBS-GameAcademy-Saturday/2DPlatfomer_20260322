@@ -69,7 +69,7 @@ public class Damageable : MonoBehaviour
             {
                 _animator.SetBool(AnimationStrings.Death, true);
             }
-
+            UIManager.Instance.CharacterTakeDamage(gameObject, damage);
             _isInvincible = true;
             OnChangeHealth.Invoke(Health, MaxHealth);
             _animator.SetTrigger(AnimationStrings.Hit);
@@ -89,6 +89,7 @@ public class Damageable : MonoBehaviour
             {
                 _animator.SetBool(AnimationStrings.Death, true);
             }
+            UIManager.Instance.CharacterTakeDamage(gameObject, damage);
             _isInvincible = true;
             _animator.SetTrigger(AnimationStrings.Hit);
             OnChangeHealth.Invoke(Health, MaxHealth);
@@ -96,6 +97,27 @@ public class Damageable : MonoBehaviour
             // 넉백 이벤트 호출
             LockVelocity = true;
             OnKnockback.Invoke(knockback);
+            return true;
+        }
+        return false;
+    }
+
+
+    public bool Heal(int healthRestore)
+    {
+        if(IsAlive && Health < MaxHealth)
+        {
+            // 내가 채울있는 체력만큼만 체력 회복을 시켜줌
+            // Health : 90
+            // healthRestore : 20
+            // Health ; 110(X),
+            // Health : 100(O)
+
+            int maxHeal = Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal = Mathf.Min(maxHeal, healthRestore);
+            _health += actualHeal;
+            UIManager.Instance.CharacterTakeHeal(gameObject, actualHeal);
+            OnChangeHealth.Invoke(Health, MaxHealth);
             return true;
         }
         return false;
