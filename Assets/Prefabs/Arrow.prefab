@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   _attackDamage: 10
   knockback: {x: 0, y: 0}
-  moveSpeed: {x: 3, y: 0}
+  moveSpeed: {x: 10, y: 0}
 --- !u!50 &8541100445383996793
 Rigidbody2D:
   serializedVersion: 5

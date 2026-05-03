@@ -28,5 +28,10 @@ public class HealthBar : MonoBehaviour
     {
         healthSldierBar.value = currentHealth / maxHealth;
         healthText.text = $"{currentHealth} / {maxHealth}";
+
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
